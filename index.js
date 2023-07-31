@@ -16,3 +16,5 @@ function constructURL(text) {
 function displayURL(text) {
     console.log(constructURL(url + text));
 }
+
+displayURL(text1);
