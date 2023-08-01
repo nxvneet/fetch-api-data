@@ -19,24 +19,40 @@ function constructURL2(e_id) {
 
 function doFetch1(emp) {
     fetch(constructURL1(emp))
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok.");
+            }
+            return response.json();
+        })
         .then(json => {
             console.log(json);
-            displayData(json.data);
+            displayData(json.data); //when we call the displayData function with the fetched JSON data, it will create and display the employee data in a table format.
         })
-        .catch(error => console.error(error));
+        .catch(error => {
+            console.error("Error fetching data from API 1:", error);
+            // Handle the error here, e.g., show an error message to the user
+        });
 }
 
-// function to call data of 1 employee
 function doFetch2(e_id) {
     fetch(constructURL2(e_id))
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok.");
+            }
+            return response.json();
+        })
         .then(json => {
             console.log(json);
-            displayData(json.data);
+            displayData([json.data]);
         })
-        .catch(error => console.error(error));
+        .catch(error => {
+            console.error("Error fetching data from API 2:", error);
+            // Handle the error here, e.g., show an error message to the user
+        });
 }
+
 
 doFetch1(emp2);
 // doFetch2(id_2);
@@ -44,34 +60,33 @@ doFetch1(emp2);
 
 function displayData(data) {
     var mainContainer = document.querySelector("#mydata");
-    mainContainer.innerHTML = ""; // Clears previous data if any
+    mainContainer.innerHTML = ""; // Clear previous data if any
 
-    // Checks if the data is an array or an object and process accordingly
-    if (Array.isArray(data)) {
-        for (var i = 0; i < data.length; i++) {
-            var div = document.createElement("div");
-            div.innerHTML =
-                "id: " +
-                data[i].id + "\n" +
-                "Employee Name: " +
-                data[i].employee_name + "\n" +
-                "Salary " +
-                data[i].employee_salary + "\n" +
-                "Age " +
-                data[i].employee_age; + "\n" + "-------------------------------"
-            mainContainer.appendChild(div);
-        }
-    } else {
-        var div = document.createElement("div");
-        div.innerHTML =
-            "id: " +
-            data.id + "\n" +
-            "Employee Name: " +
-            data.employee_name + "\n" +
-            "Salary " +
-            data.employee_salary + "\n" +
-            "Age " +
-            data.employee_age; + "\n" + "-------------------------------"
-        mainContainer.appendChild(div);
+    // Create a table element
+    var table = document.createElement("table");
+    table.border = "1";
+
+    // Create a table header row
+    var headerRow = table.insertRow();
+    headerRow.innerHTML = "<th>ID</th><th>Employee Name</th><th>Salary</th><th>Age</th>";
+
+    // Loop through the data and create table rows for each employee
+    for (var i = 0; i < data.length; i++) {
+        var employee = data[i];
+
+        var row = table.insertRow();
+        row.innerHTML =
+            "<td>" +
+            employee.id +
+            "</td><td>" +
+            employee.employee_name +
+            "</td><td>" +
+            employee.employee_salary +
+            "</td><td>" +
+            employee.employee_age +
+            "</td>";
     }
+
+    // Append the table to the main container
+    mainContainer.appendChild(table);
 }
