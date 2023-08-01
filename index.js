@@ -27,6 +27,7 @@ function doFetch1(emp) {
         .catch(error => console.error(error));
 }
 
+// function to call data of 1 employee
 function doFetch2(e_id) {
     fetch(constructURL2(e_id))
         .then(response => response.json())
@@ -38,7 +39,7 @@ function doFetch2(e_id) {
 }
 
 doFetch1(emp2);
-doFetch2(id_2);
+// doFetch2(id_2);
 
 
 function displayData(data) {
