@@ -1,5 +1,6 @@
 var url1 = "https://dummy.restapiexample.com/api/v1/employees"; // this api gives all data by on call
 var url2 = "https://dummy.restapiexample.com/api/v1/employee/"; // this api gives data of 1 employee only [ employee/{id} ]
+var btnTest = document.querySelector("#btn-test");
 
 const emp1 = "Airi Satou";
 const emp2 = "Cedric Kelly";
@@ -54,8 +55,10 @@ function doFetch2(e_id) {
 }
 
 
-doFetch1(emp2);
+btnTest.addEventListener("click", doFetch1);
+// doFetch1(emp2);
 // doFetch2(id_2);
+
 
 
 function displayData(data) {
